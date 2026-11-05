@@ -24,6 +24,9 @@ Everything is relative to this repo — run from the repo root on a machine with
 ./build.sh --cut-only   # reuse the existing vibe-agent-demo.mp4, just cut + shrink
 ```
 
+`*.mp4` is gitignored, so `--cut-only` needs a local recording whose timings match the
+`SEGMENTS` plan in `build.sh` (otherwise the last segment truncates or overruns).
+
 `build.sh` runs three steps:
 
 1. **Record**: `vhs vibe-agent-demo.tape` → `vibe-agent-demo.mp4` (1200x720, Catppuccin Mocha,
@@ -53,6 +56,9 @@ The recorded vibe command (see the tape):
 ```bash
 vibe --auto-approve --output streaming --agent wp-reviewer -p 'Review the diff of the latest commit (HEAD) for README.md and CHANGELOG.md only; report severity-ranked findings with file:line.' 2>/dev/null | jq --unbuffered -R -r -f pretty.jq
 ```
+
+(In the tape the command runs after `cd ~/code/mistral-toolbox`, so it uses `-f ~-/pretty.jq`:
+`~-` expands to `$OLDPWD`, the repo root, and avoids a `$` that VHS would interpolate.)
 
 `pretty.jq` turns the `--output streaming` NDJSON events into readable terminal text: `effect`
 events print the tool summary (`Loading skill: code-review`, `bash: git diff …`), assistant
