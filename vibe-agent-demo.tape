@@ -1,4 +1,6 @@
-Output "/tmp/mistral-demo/vibe-agent-demo.mp4"
+# Records vibe-agent-demo.mp4 in this directory (run from the repo root: vhs vibe-agent-demo.tape).
+# The demo target is ~/code/mistral-toolbox; the jq filter is pretty.jq next to this tape.
+Output "vibe-agent-demo.mp4"
 
 Set Shell "bash"
 Set FontSize 15
@@ -28,7 +30,7 @@ Sleep 500ms
 Type "# Review the latest commit with the wp-reviewer agent (it loads the code-review skill on demand):"
 Enter
 Sleep 500ms
-Type "vibe --auto-approve --output streaming --agent wp-reviewer -p 'Review the diff of the latest commit (HEAD) for README.md and CHANGELOG.md only; report severity-ranked findings with file:line.' 2>/dev/null | jq --unbuffered -R -r -f /tmp/mistral-demo/pretty.jq"
+Type "vibe --auto-approve --output streaming --agent wp-reviewer -p 'Review the diff of the latest commit (HEAD) for README.md and CHANGELOG.md only; report severity-ranked findings with file:line.' 2>/dev/null | jq --unbuffered -R -r -f pretty.jq"
 Sleep 400ms
 Enter
 Wait+Line@10m /demo\$/
